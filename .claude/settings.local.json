@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:www.prorun.nl)",
+      "WebSearch",
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:www.npmjs.com)",
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "Bash(npm install @svg-maps/netherlands)",
+      "Bash(node -e \"const map = require\\(''@svg-maps/netherlands''\\); map.locations.forEach\\(l => console.log\\(l.id, l.name, l.path.substring\\(0, 80\\)\\)\\)\")",
+      "Bash(node --input-type=module -e \"import map from ''@svg-maps/netherlands''; map.locations.forEach\\(l => console.log\\(l.id, l.name, l.path.substring\\(0, 100\\)\\)\\)\")",
+      "Bash(node --input-type=module -e \":*)"
+    ]
+  }
+}
