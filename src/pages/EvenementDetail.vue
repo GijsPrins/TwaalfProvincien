@@ -74,7 +74,11 @@
       </div>
 
       <!-- Upcoming: registration deadline + event website -->
-      <div v-if="isUpcoming" class="grid grid-cols-2 gap-4 mb-6">
+      <div v-if="isUpcoming && (event.registration_opens || event.registration_deadline)" class="grid grid-cols-2 gap-4 mb-6">
+        <div v-if="event.registration_opens" class="bg-white border border-gray-200 rounded-xl p-4">
+          <div class="text-xs text-gray-400 mb-1">Inschrijving opent</div>
+          <div class="font-medium text-sm">{{ formatDate(event.registration_opens) }}</div>
+        </div>
         <div v-if="event.registration_deadline" class="bg-white border border-gray-200 rounded-xl p-4">
           <div class="text-xs text-gray-400 mb-1">Inschrijfdeadline</div>
           <div class="font-medium text-sm">{{ formatDate(event.registration_deadline) }}</div>

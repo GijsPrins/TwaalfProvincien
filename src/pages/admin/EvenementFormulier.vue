@@ -70,6 +70,10 @@
           <input v-model="form.event_url" type="url" :class="fieldClass" placeholder="https://…" />
         </div>
         <div>
+          <label class="block text-sm font-medium mb-1">Inschrijving opent <span class="text-gray-400 font-normal">(optioneel)</span></label>
+          <input v-model="form.registration_opens" type="date" :class="fieldClass" />
+        </div>
+        <div>
           <label class="block text-sm font-medium mb-1">Inschrijfdeadline <span class="text-gray-400 font-normal">(optioneel)</span></label>
           <input v-model="form.registration_deadline" type="date" :class="fieldClass" />
         </div>
@@ -170,6 +174,7 @@ const form = ref({
   location: '',
   status: 'interested',
   event_url: '',
+  registration_opens: '',
   registration_deadline: '',
   finish_time: '',
   timing_url: '',
@@ -253,6 +258,7 @@ onMounted(async () => {
       location:              data.location ?? '',
       status:                data.status,
       event_url:             data.event_url ?? '',
+      registration_opens:    data.registration_opens ?? '',
       registration_deadline: data.registration_deadline ?? '',
       finish_time:           data.finish_time ?? '',
       timing_url:            data.timing_url ?? '',

@@ -4,7 +4,7 @@
       <span :class="compact ? 'text-xs font-medium text-gray-500' : 'text-sm font-medium'">
         {{ compact ? distance.medal : distance.label }}
       </span>
-      <span v-if="!compact" class="text-xs font-medium px-2 py-0.5 rounded-full" :class="medalColor">
+      <span v-if="!compact" class="text-xs font-medium px-2 py-0.5 rounded-full" :class="medalColor" :style="medalStyle">
         {{ distance.medal }}
       </span>
     </div>
@@ -33,7 +33,7 @@
           <div
             class="rounded-full transition-all"
             :class="[barColor, compact ? 'h-1.5' : 'h-2']"
-            :style="{ width: `${(completed / 12) * 100}%` }"
+            :style="{ width: `${(completed / 12) * 100}%`, ...(distance.value === '10k' ? { backgroundColor: '#cd7f32' } : {}) }"
           ></div>
         </div>
       </template>
@@ -54,16 +54,19 @@ const props = defineProps({
 })
 
 const medalColor = computed(() => ({
-  '10k':    'bg-amber-100 text-amber-700',
+  '10k':    'text-white',
   half:     'bg-gray-100 text-gray-600',
   marathon: 'bg-yellow-100 text-yellow-700',
 })[props.distance.value])
 
+const medalStyle = computed(() =>
+  props.distance.value === '10k' ? { backgroundColor: '#cd7f32' } : {}
+)
+
 const barColor = computed(() => ({
-  '10k':    'bg-amber-500',
   half:     'bg-gray-400',
   marathon: 'bg-yellow-500',
-})[props.distance.value])
+})[props.distance.value] ?? '')
 
 function formatDate(date) {
   return new Date(date).toLocaleDateString('nl-NL', { day: 'numeric', month: 'short', year: 'numeric' })

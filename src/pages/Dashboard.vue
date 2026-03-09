@@ -14,6 +14,8 @@
           :key="distance.value"
           :distance="distance"
           :completed="completedPerDistance[distance.value] ?? 0"
+          :province-selected="!!selectedProvince"
+          :event="provinceMedalEvents[distance.value] ?? null"
           compact
         />
       </div>
@@ -42,6 +44,7 @@
           <div class="flex-1 flex items-center">
             <NetherlandsMap
               :completed-provinces="completedProvinces"
+              :upcoming-provinces="upcomingProvinces"
               :active-distance="activeDistance"
               v-model:selected-province-id="selectedProvinceId"
             />
@@ -136,6 +139,18 @@ const completedPerDistance = computed(() => {
     count[ev.distance_category] = (count[ev.distance_category] ?? 0) + 1
   }
   return count
+})
+
+const upcomingProvinces = computed(() => {
+  const result = {}
+  for (const d of DISTANCES) {
+    result[d.value] = new Set(
+      events.value
+        .filter(ev => ['interested', 'signed_up'].includes(ev.status) && ev.distance_category === d.value)
+        .map(ev => ev.province_id)
+    )
+  }
+  return result
 })
 
 const completedProvinces = computed(() => {
