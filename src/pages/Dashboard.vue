@@ -86,7 +86,7 @@
                   </div>
                 </div>
                 <div class="text-right shrink-0 ml-3">
-                  <div class="text-xs text-gray-500">{{ formatDate(ev.date) }}</div>
+                  <div class="text-xs text-gray-500">{{ formatDateShort(ev.date) }}</div>
                   <StatusBadge :status="ev.status" class="mt-1" />
                 </div>
               </router-link>
@@ -108,6 +108,7 @@ import { ref, computed, onMounted } from 'vue'
 import { DISTANCES, PROVINCES } from '../data/provinces.js'
 import { useEvents } from '../composables/useEvents.js'
 import { useAuthStore } from '../stores/auth.js'
+import { distanceLabel, formatDate, UPCOMING_STATUSES } from '../utils/events.js'
 import ProgressCard from '../components/ProgressCard.vue'
 import NetherlandsMap from '../components/NetherlandsMap.vue'
 import StatusBadge from '../components/StatusBadge.vue'
@@ -126,7 +127,7 @@ const selectedProvince = computed(() =>
 const completed = computed(() => events.value.filter(ev => ev.status === 'completed'))
 
 const upcoming = computed(() => {
-  const evs = events.value.filter(ev => ['interested', 'signed_up'].includes(ev.status))
+  const evs = events.value.filter(ev => UPCOMING_STATUSES.includes(ev.status))
   if (selectedProvinceId.value) {
     return evs.filter(ev => ev.province_id === selectedProvinceId.value)
   }
@@ -135,8 +136,10 @@ const upcoming = computed(() => {
 
 const completedPerDistance = computed(() => {
   const count = {}
-  for (const ev of completed.value) {
-    count[ev.distance_category] = (count[ev.distance_category] ?? 0) + 1
+  for (const d of DISTANCES) {
+    count[d.value] = new Set(
+      completed.value.filter(ev => ev.distance_category === d.value).map(ev => ev.province_id)
+    ).size
   }
   return count
 })
@@ -146,7 +149,7 @@ const upcomingProvinces = computed(() => {
   for (const d of DISTANCES) {
     result[d.value] = new Set(
       events.value
-        .filter(ev => ['interested', 'signed_up'].includes(ev.status) && ev.distance_category === d.value)
+        .filter(ev => UPCOMING_STATUSES.includes(ev.status) && ev.distance_category === d.value)
         .map(ev => ev.province_id)
     )
   }
@@ -177,11 +180,7 @@ const provinceMedalEvents = computed(() => {
   return result
 })
 
-function distanceLabel(value) {
-  return DISTANCES.find(d => d.value === value)?.label ?? value
-}
-
-function formatDate(date) {
-  return new Date(date).toLocaleDateString('nl-NL', { day: 'numeric', month: 'short' })
+function formatDateShort(date) {
+  return formatDate(date, { day: 'numeric', month: 'short' })
 }
 </script>

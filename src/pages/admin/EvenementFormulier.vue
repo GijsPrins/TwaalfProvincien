@@ -97,7 +97,7 @@
             type="number"
             step="0.01"
             min="0"
-            :class="fieldClass + ' mt-2'"
+            :class="[fieldClass, 'mt-2']"
             placeholder="Afstand in km, bijv. 16.09"
           />
         </div>
@@ -149,7 +149,8 @@
 import { ref, computed, watch, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { PROVINCES, DISTANCES, STATUS_LABELS } from '../../data/provinces.js'
-import { saveEvent, deleteEvent } from '../../composables/useEvents.js'
+import { useEvent, saveEvent, deleteEvent } from '../../composables/useEvents.js'
+import { distanceLabel, formatDate, UPCOMING_STATUSES, FINISHED_STATUSES } from '../../utils/events.js'
 import { supabase } from '../../lib/supabase.js'
 
 const route = useRoute()
@@ -202,8 +203,8 @@ watch(() => form.value.distance_category, (val) => {
   }
 })
 
-const isUpcoming = computed(() => ['interested', 'signed_up'].includes(form.value.status))
-const isFinished = computed(() => ['completed', 'dnf'].includes(form.value.status))
+const isUpcoming = computed(() => UPCOMING_STATUSES.includes(form.value.status))
+const isFinished = computed(() => FINISHED_STATUSES.includes(form.value.status))
 
 // Nominatim geocoding — auto-fill province from location
 const geocoding = ref(false)
@@ -238,18 +239,13 @@ async function geocodeLocation() {
 
 const busy = ref(false)
 const error = ref('')
-const loadingEvent = ref(false)
+const { event: loadedEvent, loading: loadingEvent, loadEvent } = useEvent()
 
 onMounted(async () => {
   if (!isNew.value) {
-    loadingEvent.value = true
-    const { data, error: err } = await supabase
-      .from('events')
-      .select('*')
-      .eq('id', route.params.id)
-      .single()
-    loadingEvent.value = false
-    if (err) { error.value = err.message; return }
+    await loadEvent(route.params.id)
+    const data = loadedEvent.value
+    if (!data) return
     form.value = {
       name:                  data.name,
       date:                  data.date,
@@ -273,8 +269,34 @@ onMounted(async () => {
   }
 })
 
+const VALID_FROM = { '10k': '2024-01-01', half: '2023-01-01', marathon: '2023-01-01' }
+
 async function save() {
   error.value = ''
+
+  // Validate challenge start date
+  const validFrom = VALID_FROM[form.value.distance_category]
+  if (validFrom && form.value.date < validFrom) {
+    error.value = `Evenementen voor de ${distanceLabel(form.value.distance_category)} track tellen pas mee vanaf ${formatDate(validFrom)}.`
+    return
+  }
+
+  // Warn if a completed event for this province+distance already exists
+  if (form.value.status === 'completed') {
+    let query = supabase
+      .from('events')
+      .select('id, name')
+      .eq('province_id', form.value.province_id)
+      .eq('distance_category', form.value.distance_category)
+      .eq('status', 'completed')
+    if (!isNew.value) query = query.neq('id', route.params.id)
+    const { data: existing } = await query
+    if (existing?.length) {
+      error.value = `Je hebt al een gelopen ${distanceLabel(form.value.distance_category)} in deze provincie: "${existing[0].name}". Elke provincie telt maar één keer mee.`
+      return
+    }
+  }
+
   busy.value = true
   try {
     await saveEvent(form.value, isNew.value ? null : route.params.id)

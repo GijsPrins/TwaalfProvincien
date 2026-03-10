@@ -69,9 +69,10 @@
 
 <script setup>
 import { ref, computed, onMounted } from 'vue'
-import { DISTANCES, STATUS_LABELS } from '../data/provinces.js'
+import { STATUS_LABELS } from '../data/provinces.js'
 import { useEvents } from '../composables/useEvents.js'
 import { useAuthStore } from '../stores/auth.js'
+import { distanceLabel, formatDate } from '../utils/events.js'
 import StatusBadge from '../components/StatusBadge.vue'
 
 const auth = useAuthStore()
@@ -90,11 +91,4 @@ const filtered = computed(() => {
   return events.value.filter(ev => ev.status === activeStatus.value)
 })
 
-function distanceLabel(value) {
-  return DISTANCES.find(d => d.value === value)?.label ?? value
-}
-
-function formatDate(date) {
-  return new Date(date).toLocaleDateString('nl-NL', { day: 'numeric', month: 'long', year: 'numeric' })
-}
 </script>
