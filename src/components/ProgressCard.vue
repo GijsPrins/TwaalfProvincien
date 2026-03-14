@@ -19,15 +19,15 @@
             :to="`/evenementen/${event.id}`"
             class="font-medium text-sm leading-tight hover:text-orange-600 transition-colors line-clamp-2"
           >{{ event.name }}</router-link>
-          <div class="text-xs text-gray-400 mt-1">{{ event.finish_time ?? formatDate(event.date) }}</div>
+          <div class="text-xs text-gray-500 mt-1">{{ event.finish_time ?? formatDate(event.date) }}</div>
         </div>
-        <div v-else class="text-sm text-gray-400">{{ $t('progress.no_medal') }}</div>
+        <div v-else class="text-sm text-gray-500">{{ $t('progress.no_medal') }}</div>
       </template>
 
       <!-- Normal mode: x/12 + progress bar -->
       <template v-else>
         <div :class="compact ? 'text-xl font-bold tabular-nums' : 'text-3xl font-bold tabular-nums mb-1'">
-          {{ completed }}<span :class="compact ? 'text-sm font-normal text-gray-400' : 'text-lg font-normal text-gray-400'">/12</span>
+          {{ completed }}<span :class="compact ? 'text-sm font-normal text-gray-400' : 'text-lg font-normal text-gray-500'">/12</span>
         </div>
         <div class="w-full bg-gray-100 rounded-full mt-2" :class="compact ? 'h-1.5' : 'h-2'">
           <div

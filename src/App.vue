@@ -13,7 +13,7 @@
           <router-link to="/evenementen" class="hover:text-orange-600 transition-colors">{{ $t('nav.events') }}</router-link>
           <template v-if="auth.user">
             <router-link to="/admin" class="hover:text-orange-600 transition-colors">{{ $t('nav.admin') }}</router-link>
-            <button @click="auth.logout()" class="text-gray-400 hover:text-gray-700 transition-colors">
+            <button @click="auth.logout()" class="text-gray-500 hover:text-gray-700 transition-colors">
               {{ $t('nav.logout') }}
             </button>
           </template>
@@ -23,7 +23,7 @@
           <button
             @click="toggleLocale"
             :aria-label="$t('nav.switch_locale')"
-            class="text-xs text-gray-400 hover:text-gray-700 transition-colors font-medium tabular-nums w-6 text-center"
+            class="text-xs text-gray-500 hover:text-gray-700 transition-colors font-medium tabular-nums w-6 text-center"
           >
             {{ locale === 'nl' ? 'EN' : 'NL' }}
           </button>
@@ -33,7 +33,7 @@
 
     <main id="main-content" class="max-w-5xl mx-auto px-4 py-8">
       <router-view v-if="!auth.loading" />
-      <div v-else role="status" aria-live="polite" class="flex justify-center py-20 text-gray-400 text-sm">{{ $t('common.loading') }}</div>
+      <div v-else role="status" aria-live="polite" class="flex justify-center py-20 text-gray-500 text-sm">{{ $t('common.loading') }}</div>
     </main>
   </div>
 </template>

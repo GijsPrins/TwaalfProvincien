@@ -3,7 +3,7 @@
     <h1 class="text-2xl font-semibold mb-1">{{ $t('dashboard.title') }}</h1>
     <p class="text-gray-500 text-sm mb-6">{{ $t('dashboard.subtitle') }}</p>
 
-    <div v-if="loading" role="status" aria-live="polite" class="text-sm text-gray-400">{{ $t('common.loading') }}</div>
+    <div v-if="loading" role="status" aria-live="polite" class="text-sm text-gray-500">{{ $t('common.loading') }}</div>
     <div v-else-if="error" role="alert" class="text-sm text-red-500">{{ error }}</div>
 
     <template v-else>
@@ -50,7 +50,7 @@
               v-model:selected-province-id="selectedProvinceId"
             />
           </div>
-          <p v-if="selectedProvince" class="text-xs text-gray-400 text-center mt-2">{{ $t('dashboard.click_to_deselect') }}</p>
+          <p v-if="selectedProvince" class="text-xs text-gray-500 text-center mt-2">{{ $t('dashboard.click_to_deselect') }}</p>
         </div>
 
         <!-- Right: sidebar -->
@@ -81,7 +81,7 @@
                 >
                   <div class="min-w-0">
                     <div class="font-medium text-sm truncate">{{ ev.name }}</div>
-                    <div class="text-xs text-gray-400 mt-0.5">
+                    <div class="text-xs text-gray-500 mt-0.5">
                       {{ ev.provinces?.name }} · {{ distanceLabel(ev.distance_category) }}
                     </div>
                   </div>
@@ -92,7 +92,7 @@
                 </router-link>
               </li>
             </ul>
-            <p v-else class="text-sm text-gray-400">
+            <p v-else class="text-sm text-gray-500">
               {{ selectedProvince ? $t('dashboard.no_upcoming_in', { province: selectedProvince.name }) : $t('dashboard.no_upcoming') }}
               <router-link v-if="auth.user && !selectedProvince" to="/admin/evenement/nieuw" class="text-orange-600 hover:underline">{{ $t('dashboard.add_question') }}</router-link>
             </p>

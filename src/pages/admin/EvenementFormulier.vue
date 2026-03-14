@@ -2,7 +2,7 @@
   <div class="max-w-lg">
     <h2 class="text-lg font-semibold mb-6">{{ isNew ? $t('event_form.title_new') : $t('event_form.title_edit') }}</h2>
 
-    <div v-if="loadingEvent" role="status" aria-live="polite" class="text-sm text-gray-400">{{ $t('common.loading') }}</div>
+    <div v-if="loadingEvent" role="status" aria-live="polite" class="text-sm text-gray-500">{{ $t('common.loading') }}</div>
 
     <form v-else @submit.prevent="save" class="space-y-4">
 
@@ -43,7 +43,7 @@
       <div>
         <label for="ef-province" class="flex items-center gap-2 text-sm font-medium mb-1">
           {{ $t('event_form.province') }}
-          <span v-if="geocoding" class="text-xs text-gray-400 font-normal">{{ $t('event_form.geocoding') }}</span>
+          <span v-if="geocoding" class="text-xs text-gray-500 font-normal">{{ $t('event_form.geocoding') }}</span>
           <span v-else-if="geocodedName" class="text-xs text-orange-500 font-normal">{{ $t('event_form.geocoded') }}</span>
         </label>
         <select id="ef-province" v-model="form.province_id" required :class="fieldClass" @change="geocodedName = ''">
@@ -73,14 +73,14 @@
         <div>
           <label for="ef-reg-opens" class="block text-sm font-medium mb-1">
             {{ $t('event_form.registration_opens') }}
-            <span class="text-gray-400 font-normal">({{ $t('event_form.optional') }})</span>
+            <span class="text-gray-500 font-normal">({{ $t('event_form.optional') }})</span>
           </label>
           <input id="ef-reg-opens" v-model="form.registration_opens" type="date" :class="fieldClass" />
         </div>
         <div>
           <label for="ef-reg-deadline" class="block text-sm font-medium mb-1">
             {{ $t('event_form.registration_deadline') }}
-            <span class="text-gray-400 font-normal">({{ $t('event_form.optional') }})</span>
+            <span class="text-gray-500 font-normal">({{ $t('event_form.optional') }})</span>
           </label>
           <input id="ef-reg-deadline" v-model="form.registration_deadline" type="date" :class="fieldClass" />
         </div>

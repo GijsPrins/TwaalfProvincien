@@ -28,11 +28,11 @@
       </button>
     </div>
 
-    <div v-if="loading" role="status" aria-live="polite" class="text-sm text-gray-400">{{ $t('common.loading') }}</div>
+    <div v-if="loading" role="status" aria-live="polite" class="text-sm text-gray-500">{{ $t('common.loading') }}</div>
     <div v-else-if="error" role="alert" class="text-sm text-red-500">{{ error }}</div>
 
     <template v-else>
-      <div v-if="filtered.length === 0" class="text-sm text-gray-400">
+      <div v-if="filtered.length === 0" class="text-sm text-gray-500">
         {{ $t('events.none_found') }}
         <router-link v-if="auth.user" to="/admin/evenement/nieuw" class="text-orange-600 hover:underline">
           {{ $t('events.add_one') }}
