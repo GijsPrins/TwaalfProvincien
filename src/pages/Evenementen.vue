@@ -13,11 +13,12 @@
     <p class="text-gray-500 text-sm mb-6">{{ $t('events.subtitle') }}</p>
 
     <!-- Status filters -->
-    <div class="flex gap-2 flex-wrap mb-6">
+    <div class="flex gap-2 flex-wrap mb-6" role="group" :aria-label="$t('events.filter_by_status')">
       <button
         v-for="f in statusFilters"
         :key="f.value"
         @click="activeStatus = f.value"
+        :aria-pressed="activeStatus === f.value"
         class="px-3 py-1 rounded-full text-xs font-medium transition-colors"
         :class="activeStatus === f.value
           ? 'bg-orange-100 text-orange-700'
@@ -27,8 +28,8 @@
       </button>
     </div>
 
-    <div v-if="loading" class="text-sm text-gray-400">{{ $t('common.loading') }}</div>
-    <div v-else-if="error" class="text-sm text-red-500">{{ error }}</div>
+    <div v-if="loading" role="status" aria-live="polite" class="text-sm text-gray-400">{{ $t('common.loading') }}</div>
+    <div v-else-if="error" role="alert" class="text-sm text-red-500">{{ error }}</div>
 
     <template v-else>
       <div v-if="filtered.length === 0" class="text-sm text-gray-400">
@@ -38,31 +39,31 @@
         </router-link>
       </div>
 
-      <div v-else class="space-y-3">
-        <router-link
-          v-for="ev in filtered"
-          :key="ev.id"
-          :to="`/evenementen/${ev.id}`"
-          class="flex items-center justify-between bg-white border border-gray-200 rounded-xl px-5 py-4 hover:border-orange-300 transition-colors"
-        >
-          <div class="min-w-0">
-            <div class="font-medium truncate">{{ ev.name }}</div>
-            <div class="text-sm text-gray-500 mt-0.5">
-              {{ ev.provinces?.name }}
-              <span class="mx-1.5 text-gray-300">·</span>
-              {{ distanceLabel(ev.distance_category) }}
-              <template v-if="ev.location">
+      <ul v-else class="space-y-3">
+        <li v-for="ev in filtered" :key="ev.id">
+          <router-link
+            :to="`/evenementen/${ev.id}`"
+            class="flex items-center justify-between bg-white border border-gray-200 rounded-xl px-5 py-4 hover:border-orange-300 transition-colors"
+          >
+            <div class="min-w-0">
+              <div class="font-medium truncate">{{ ev.name }}</div>
+              <div class="text-sm text-gray-500 mt-0.5">
+                {{ ev.provinces?.name }}
                 <span class="mx-1.5 text-gray-300">·</span>
-                {{ ev.location }}
-              </template>
+                {{ distanceLabel(ev.distance_category) }}
+                <template v-if="ev.location">
+                  <span class="mx-1.5 text-gray-300">·</span>
+                  {{ ev.location }}
+                </template>
+              </div>
             </div>
-          </div>
-          <div class="flex flex-col items-end gap-1.5 shrink-0 ml-4">
-            <span class="text-sm text-gray-600">{{ formatDate(ev.date) }}</span>
-            <StatusBadge :status="ev.status" />
-          </div>
-        </router-link>
-      </div>
+            <div class="flex flex-col items-end gap-1.5 shrink-0 ml-4">
+              <span class="text-sm text-gray-600">{{ formatDate(ev.date) }}</span>
+              <StatusBadge :status="ev.status" />
+            </div>
+          </router-link>
+        </li>
+      </ul>
     </template>
   </div>
 </template>

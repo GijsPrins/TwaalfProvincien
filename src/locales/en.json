@@ -5,7 +5,9 @@
     "events": "Events",
     "admin": "Admin",
     "logout": "Log out",
-    "login": "Log in"
+    "login": "Log in",
+    "skip_to_content": "Skip to content",
+    "switch_locale": "Schakel naar Nederlands"
   },
   "common": {
     "loading": "Loading…",
@@ -33,14 +35,16 @@
     "upcoming": "Upcoming",
     "no_upcoming_in": "No upcoming events in {province}.",
     "no_upcoming": "No upcoming events.",
-    "add_question": "Add one?"
+    "add_question": "Add one?",
+    "filter_by_distance": "Filter by distance"
   },
   "events": {
     "title": "Events",
     "new": "+ New",
     "subtitle": "All upcoming and completed events",
     "none_found": "No events found.",
-    "add_one": "Add one."
+    "add_one": "Add one.",
+    "filter_by_status": "Filter by status"
   },
   "event_detail": {
     "back": "← Back to events",

@@ -2,24 +2,24 @@
   <div class="max-w-lg">
     <h2 class="text-lg font-semibold mb-6">{{ isNew ? $t('event_form.title_new') : $t('event_form.title_edit') }}</h2>
 
-    <div v-if="loadingEvent" class="text-sm text-gray-400">{{ $t('common.loading') }}</div>
+    <div v-if="loadingEvent" role="status" aria-live="polite" class="text-sm text-gray-400">{{ $t('common.loading') }}</div>
 
     <form v-else @submit.prevent="save" class="space-y-4">
 
       <!-- Always visible -->
       <div>
-        <label class="block text-sm font-medium mb-1">{{ $t('event_form.name') }}</label>
-        <input v-model="form.name" type="text" required :class="fieldClass" />
+        <label for="ef-name" class="block text-sm font-medium mb-1">{{ $t('event_form.name') }}</label>
+        <input id="ef-name" v-model="form.name" type="text" required :class="fieldClass" />
       </div>
 
       <div class="grid grid-cols-2 gap-4">
         <div>
-          <label class="block text-sm font-medium mb-1">{{ $t('event_form.date') }}</label>
-          <input v-model="form.date" type="date" required :class="fieldClass" />
+          <label for="ef-date" class="block text-sm font-medium mb-1">{{ $t('event_form.date') }}</label>
+          <input id="ef-date" v-model="form.date" type="date" required :class="fieldClass" />
         </div>
         <div>
-          <label class="block text-sm font-medium mb-1">{{ $t('event_form.counts_for') }}</label>
-          <select v-model="form.distance_category" required :class="fieldClass">
+          <label for="ef-distance" class="block text-sm font-medium mb-1">{{ $t('event_form.counts_for') }}</label>
+          <select id="ef-distance" v-model="form.distance_category" required :class="fieldClass">
             <option value="">{{ $t('event_form.pick_track') }}</option>
             <option v-for="d in DISTANCES" :key="d.value" :value="d.value">
               {{ $t(`distances.${d.value}.label`) }} ({{ $t(`distances.${d.value}.medal`) }})
@@ -29,8 +29,9 @@
       </div>
 
       <div>
-        <label class="block text-sm font-medium mb-1">{{ $t('event_form.location') }}</label>
+        <label for="ef-location" class="block text-sm font-medium mb-1">{{ $t('event_form.location') }}</label>
         <input
+          id="ef-location"
           v-model="form.location"
           type="text"
           :class="fieldClass"
@@ -40,12 +41,12 @@
       </div>
 
       <div>
-        <label class="flex items-center gap-2 text-sm font-medium mb-1">
+        <label for="ef-province" class="flex items-center gap-2 text-sm font-medium mb-1">
           {{ $t('event_form.province') }}
           <span v-if="geocoding" class="text-xs text-gray-400 font-normal">{{ $t('event_form.geocoding') }}</span>
           <span v-else-if="geocodedName" class="text-xs text-orange-500 font-normal">{{ $t('event_form.geocoded') }}</span>
         </label>
-        <select v-model="form.province_id" required :class="fieldClass" @change="geocodedName = ''">
+        <select id="ef-province" v-model="form.province_id" required :class="fieldClass" @change="geocodedName = ''">
           <option value="">{{ $t('event_form.pick_province') }}</option>
           <option v-for="p in PROVINCES" :key="p.id" :value="p.id">
             {{ p.name }}
@@ -54,8 +55,8 @@
       </div>
 
       <div>
-        <label class="block text-sm font-medium mb-1">{{ $t('event_form.status') }}</label>
-        <select v-model="form.status" required :class="fieldClass">
+        <label for="ef-status" class="block text-sm font-medium mb-1">{{ $t('event_form.status') }}</label>
+        <select id="ef-status" v-model="form.status" required :class="fieldClass">
           <option v-for="key in statusKeys" :key="key" :value="key">
             {{ $t(`statuses.${key}`) }}
           </option>
@@ -66,22 +67,22 @@
       <template v-if="isUpcoming">
         <hr class="border-gray-100" />
         <div>
-          <label class="block text-sm font-medium mb-1">{{ $t('event_form.event_website') }}</label>
-          <input v-model="form.event_url" type="url" :class="fieldClass" placeholder="https://…" />
+          <label for="ef-event-url" class="block text-sm font-medium mb-1">{{ $t('event_form.event_website') }}</label>
+          <input id="ef-event-url" v-model="form.event_url" type="url" :class="fieldClass" placeholder="https://…" />
         </div>
         <div>
-          <label class="block text-sm font-medium mb-1">
+          <label for="ef-reg-opens" class="block text-sm font-medium mb-1">
             {{ $t('event_form.registration_opens') }}
             <span class="text-gray-400 font-normal">({{ $t('event_form.optional') }})</span>
           </label>
-          <input v-model="form.registration_opens" type="date" :class="fieldClass" />
+          <input id="ef-reg-opens" v-model="form.registration_opens" type="date" :class="fieldClass" />
         </div>
         <div>
-          <label class="block text-sm font-medium mb-1">
+          <label for="ef-reg-deadline" class="block text-sm font-medium mb-1">
             {{ $t('event_form.registration_deadline') }}
             <span class="text-gray-400 font-normal">({{ $t('event_form.optional') }})</span>
           </label>
-          <input v-model="form.registration_deadline" type="date" :class="fieldClass" />
+          <input id="ef-reg-deadline" v-model="form.registration_deadline" type="date" :class="fieldClass" />
         </div>
       </template>
 
@@ -89,8 +90,8 @@
       <template v-if="isFinished">
         <hr class="border-gray-100" />
         <div>
-          <label class="block text-sm font-medium mb-1">{{ $t('event_form.actual_distance') }}</label>
-          <select v-model="distancePreset" :class="fieldClass">
+          <label for="ef-dist-preset" class="block text-sm font-medium mb-1">{{ $t('event_form.actual_distance') }}</label>
+          <select id="ef-dist-preset" v-model="distancePreset" :class="fieldClass">
             <option value="">{{ $t('event_form.pick_distance') }}</option>
             <option v-for="p in distancePresets" :key="p.label" :value="p.km">
               {{ p.label }}
@@ -105,16 +106,17 @@
             min="0"
             :class="[fieldClass, 'mt-2']"
             :placeholder="$t('event_form.distance_custom_placeholder')"
+            :aria-label="$t('event_form.distance_custom_placeholder')"
           />
         </div>
         <div class="grid grid-cols-2 gap-4">
           <div>
-            <label class="block text-sm font-medium mb-1">{{ $t('event_form.finish_time') }}</label>
-            <input v-model="form.finish_time" type="text" :class="fieldClass" :placeholder="$t('event_form.finish_time_placeholder')" />
+            <label for="ef-finish-time" class="block text-sm font-medium mb-1">{{ $t('event_form.finish_time') }}</label>
+            <input id="ef-finish-time" v-model="form.finish_time" type="text" :class="fieldClass" :placeholder="$t('event_form.finish_time_placeholder')" />
           </div>
           <div>
-            <label class="block text-sm font-medium mb-1">{{ $t('event_form.timing_url') }}</label>
-            <input v-model="form.timing_url" type="url" :class="fieldClass" placeholder="https://…" />
+            <label for="ef-timing-url" class="block text-sm font-medium mb-1">{{ $t('event_form.timing_url') }}</label>
+            <input id="ef-timing-url" v-model="form.timing_url" type="url" :class="fieldClass" placeholder="https://…" />
           </div>
         </div>
       </template>
@@ -122,11 +124,11 @@
       <!-- Always: notes -->
       <hr class="border-gray-100" />
       <div>
-        <label class="block text-sm font-medium mb-1">{{ $t('event_form.notes') }}</label>
-        <textarea v-model="form.notes" rows="3" :class="fieldClass"></textarea>
+        <label for="ef-notes" class="block text-sm font-medium mb-1">{{ $t('event_form.notes') }}</label>
+        <textarea id="ef-notes" v-model="form.notes" rows="3" :class="fieldClass"></textarea>
       </div>
 
-      <p v-if="error" class="text-red-500 text-sm">{{ error }}</p>
+      <p v-if="error" role="alert" class="text-red-500 text-sm">{{ error }}</p>
 
       <div class="flex items-center justify-between pt-2">
         <div class="flex gap-3">

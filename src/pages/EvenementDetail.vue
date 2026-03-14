@@ -4,8 +4,8 @@
       {{ $t('event_detail.back') }}
     </router-link>
 
-    <div v-if="loading" class="text-sm text-gray-400">{{ $t('common.loading') }}</div>
-    <div v-else-if="error">
+    <div v-if="loading" role="status" aria-live="polite" class="text-sm text-gray-400">{{ $t('common.loading') }}</div>
+    <div v-else-if="error" role="alert">
       <p class="text-gray-700 font-medium mb-1">{{ $t('event_detail.not_found_title') }}</p>
       <p class="text-sm text-gray-400">{{ $t('event_detail.not_found_message') }}</p>
     </div>

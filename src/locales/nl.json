@@ -5,7 +5,9 @@
     "events": "Evenementen",
     "admin": "Beheer",
     "logout": "Uitloggen",
-    "login": "Inloggen"
+    "login": "Inloggen",
+    "skip_to_content": "Naar inhoud",
+    "switch_locale": "Switch to English"
   },
   "common": {
     "loading": "Laden…",
@@ -33,14 +35,16 @@
     "upcoming": "Aankomend",
     "no_upcoming_in": "Geen aankomende evenementen in {province}.",
     "no_upcoming": "Geen aankomende evenementen.",
-    "add_question": "Toevoegen?"
+    "add_question": "Toevoegen?",
+    "filter_by_distance": "Filteren op afstand"
   },
   "events": {
     "title": "Evenementen",
     "new": "+ Nieuw",
     "subtitle": "Alle aankomende en gelopen evenementen",
     "none_found": "Geen evenementen gevonden.",
-    "add_one": "Voeg er een toe."
+    "add_one": "Voeg er een toe.",
+    "filter_by_status": "Filteren op status"
   },
   "event_detail": {
     "back": "← Terug naar evenementen",

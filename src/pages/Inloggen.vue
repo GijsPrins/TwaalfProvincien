@@ -3,8 +3,9 @@
     <h1 class="text-xl font-semibold mb-6">{{ $t('login.title') }}</h1>
     <form @submit.prevent="handleLogin" class="space-y-4">
       <div>
-        <label class="block text-sm font-medium mb-1">{{ $t('login.email') }}</label>
+        <label for="login-email" class="block text-sm font-medium mb-1">{{ $t('login.email') }}</label>
         <input
+          id="login-email"
           v-model="email"
           type="email"
           required
@@ -12,15 +13,16 @@
         />
       </div>
       <div>
-        <label class="block text-sm font-medium mb-1">{{ $t('login.password') }}</label>
+        <label for="login-password" class="block text-sm font-medium mb-1">{{ $t('login.password') }}</label>
         <input
+          id="login-password"
           v-model="password"
           type="password"
           required
           class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-400"
         />
       </div>
-      <p v-if="error" class="text-red-500 text-sm">{{ error }}</p>
+      <p v-if="error" role="alert" class="text-red-500 text-sm">{{ error }}</p>
       <button
         type="submit"
         :disabled="busy"
