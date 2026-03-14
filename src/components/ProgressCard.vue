@@ -2,10 +2,10 @@
   <div class="bg-white border border-gray-200 rounded-xl" :class="compact ? 'p-3' : 'p-5'">
     <div class="flex items-center justify-between mb-2">
       <span :class="compact ? 'text-xs font-medium text-gray-500' : 'text-sm font-medium'">
-        {{ compact ? distance.medal : distance.label }}
+        {{ compact ? $t(`distances.${distance.value}.medal`) : $t(`distances.${distance.value}.label`) }}
       </span>
       <span v-if="!compact" class="text-xs font-medium px-2 py-0.5 rounded-full" :class="medalColor" :style="medalStyle">
-        {{ distance.medal }}
+        {{ $t(`distances.${distance.value}.medal`) }}
       </span>
     </div>
 
@@ -21,7 +21,7 @@
           >{{ event.name }}</router-link>
           <div class="text-xs text-gray-400 mt-1">{{ event.finish_time ?? formatDate(event.date) }}</div>
         </div>
-        <div v-else class="text-sm text-gray-400">Geen medaille</div>
+        <div v-else class="text-sm text-gray-400">{{ $t('progress.no_medal') }}</div>
       </template>
 
       <!-- Normal mode: x/12 + progress bar -->
@@ -44,6 +44,7 @@
 
 <script setup>
 import { computed } from 'vue'
+import { formatDate } from '../utils/events.js'
 
 const props = defineProps({
   distance:        Object,
@@ -67,8 +68,4 @@ const barColor = computed(() => ({
   half:     'bg-gray-400',
   marathon: 'bg-yellow-500',
 })[props.distance.value] ?? '')
-
-function formatDate(date) {
-  return new Date(date).toLocaleDateString('nl-NL', { day: 'numeric', month: 'short', year: 'numeric' })
-}
 </script>

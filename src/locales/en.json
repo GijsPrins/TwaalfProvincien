@@ -1,0 +1,132 @@
+{
+  "nav": {
+    "title": "12 Provinces",
+    "overview": "Overview",
+    "events": "Events",
+    "admin": "Admin",
+    "logout": "Log out",
+    "login": "Log in"
+  },
+  "common": {
+    "loading": "Loading…",
+    "all": "All",
+    "optional": "optional"
+  },
+  "distances": {
+    "10k":      { "label": "10 km",          "medal": "Bronze" },
+    "half":     { "label": "Half marathon",  "medal": "Silver" },
+    "marathon": { "label": "Marathon",        "medal": "Gold" }
+  },
+  "statuses": {
+    "interested": "Interested",
+    "signed_up":  "Signed up",
+    "completed":  "Completed",
+    "dns":        "Did not start",
+    "dnf":        "Did not finish"
+  },
+  "dashboard": {
+    "title": "12 Provinces Tracker",
+    "subtitle": "Progress per medal track",
+    "provinces": "Provinces",
+    "click_to_deselect": "Click again to deselect",
+    "upcoming_in": "Upcoming in {province}",
+    "upcoming": "Upcoming",
+    "no_upcoming_in": "No upcoming events in {province}.",
+    "no_upcoming": "No upcoming events.",
+    "add_question": "Add one?"
+  },
+  "events": {
+    "title": "Events",
+    "new": "+ New",
+    "subtitle": "All upcoming and completed events",
+    "none_found": "No events found.",
+    "add_one": "Add one."
+  },
+  "event_detail": {
+    "back": "← Back to events",
+    "not_found_title": "Event not found",
+    "not_found_message": "This event does not exist or has been deleted.",
+    "edit": "Edit",
+    "date": "Date",
+    "status": "Status",
+    "counts_for": "Counts for",
+    "actual_distance": "Actual distance",
+    "finish_time": "Finish time",
+    "result": "Result",
+    "view": "View →",
+    "registration_opens": "Registration opens",
+    "registration_deadline": "Registration deadline",
+    "event_website": "Event website →",
+    "strava_activity": "Strava activity →",
+    "notes": "Notes"
+  },
+  "login": {
+    "title": "Log in",
+    "email": "Email address",
+    "password": "Password",
+    "submit": "Log in",
+    "submitting": "Logging in…",
+    "error": "Login failed. Please check your email address and password."
+  },
+  "admin": {
+    "overview": "Overview",
+    "new_event": "New event",
+    "strava": "Strava"
+  },
+  "admin_overview": {
+    "title": "Admin",
+    "add_event_title": "Add event",
+    "add_event_desc": "Add a new event to your calendar",
+    "strava_title": "Strava connection",
+    "strava_desc": "Manage your Strava connection and activities"
+  },
+  "strava": {
+    "title": "Strava connection",
+    "description": "Connect your Strava account to automatically link activities to events. Activities will be suggested as a match — you decide whether they count.",
+    "not_configured": "Strava connection not yet configured. Add your Supabase Edge Function and set up the Strava OAuth app to continue."
+  },
+  "event_form": {
+    "title_new": "Add event",
+    "title_edit": "Edit event",
+    "name": "Event name",
+    "date": "Date",
+    "counts_for": "Counts for",
+    "pick_track": "Choose medal track",
+    "location": "Location (start)",
+    "location_placeholder": "e.g. Tilburg, Centre",
+    "geocoding": "Looking up location…",
+    "geocoded": "Auto-filled",
+    "province": "Province",
+    "pick_province": "Choose province",
+    "status": "Status",
+    "event_website": "Event website",
+    "registration_opens": "Registration opens",
+    "registration_deadline": "Registration deadline",
+    "actual_distance": "Actual distance",
+    "pick_distance": "Choose distance",
+    "distance_other": "Other…",
+    "distance_custom_placeholder": "Distance in km, e.g. 16.09",
+    "finish_time": "Finish time (chip)",
+    "finish_time_placeholder": "e.g. 1:45:32",
+    "timing_url": "Results link",
+    "notes": "Notes",
+    "save": "Save",
+    "saving": "Saving…",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "confirm_delete": "Are you sure you want to delete this event?",
+    "valid_from_error": "Events for the {track} track only count from {date}.",
+    "duplicate_error": "You already have a completed {track} in this province: \"{name}\". Each province only counts once.",
+    "optional": "optional"
+  },
+  "distance_presets": {
+    "10km":     "10 km",
+    "10mi":     "10 miles (16.09 km)",
+    "half":     "Half marathon (21.1 km)",
+    "30km":     "30 km",
+    "marathon": "Marathon (42.2 km)"
+  },
+  "progress": {
+    "no_medal": "No medal"
+  }
+}

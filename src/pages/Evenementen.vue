@@ -1,16 +1,16 @@
 <template>
   <div>
     <div class="flex items-center justify-between mb-1">
-      <h1 class="text-2xl font-semibold">Evenementen</h1>
+      <h1 class="text-2xl font-semibold">{{ $t('events.title') }}</h1>
       <router-link
         v-if="auth.user"
         to="/admin/evenement/nieuw"
         class="text-sm bg-orange-500 hover:bg-orange-600 text-white font-medium px-3 py-1.5 rounded-lg transition-colors"
       >
-        + Nieuw
+        {{ $t('events.new') }}
       </router-link>
     </div>
-    <p class="text-gray-500 text-sm mb-6">Alle aankomende en gelopen evenementen</p>
+    <p class="text-gray-500 text-sm mb-6">{{ $t('events.subtitle') }}</p>
 
     <!-- Status filters -->
     <div class="flex gap-2 flex-wrap mb-6">
@@ -27,14 +27,14 @@
       </button>
     </div>
 
-    <div v-if="loading" class="text-sm text-gray-400">Laden…</div>
+    <div v-if="loading" class="text-sm text-gray-400">{{ $t('common.loading') }}</div>
     <div v-else-if="error" class="text-sm text-red-500">{{ error }}</div>
 
     <template v-else>
       <div v-if="filtered.length === 0" class="text-sm text-gray-400">
-        Geen evenementen gevonden.
+        {{ $t('events.none_found') }}
         <router-link v-if="auth.user" to="/admin/evenement/nieuw" class="text-orange-600 hover:underline">
-          Voeg er een toe.
+          {{ $t('events.add_one') }}
         </router-link>
       </div>
 
@@ -69,26 +69,27 @@
 
 <script setup>
 import { ref, computed, onMounted } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { STATUS_LABELS } from '../data/provinces.js'
 import { useEvents } from '../composables/useEvents.js'
 import { useAuthStore } from '../stores/auth.js'
 import { distanceLabel, formatDate } from '../utils/events.js'
 import StatusBadge from '../components/StatusBadge.vue'
 
+const { t } = useI18n()
 const auth = useAuthStore()
 const activeStatus = ref('all')
 const { events, loading, error, loadAllEvents } = useEvents()
 
 onMounted(loadAllEvents)
 
-const statusFilters = [
-  { value: 'all', label: 'Alle' },
-  ...Object.entries(STATUS_LABELS).map(([value, label]) => ({ value, label })),
-]
+const statusFilters = computed(() => [
+  { value: 'all', label: t('common.all') },
+  ...Object.keys(STATUS_LABELS).map(value => ({ value, label: t(`statuses.${value}`) })),
+])
 
 const filtered = computed(() => {
   if (activeStatus.value === 'all') return events.value
   return events.value.filter(ev => ev.status === activeStatus.value)
 })
-
 </script>

@@ -1,12 +1,11 @@
 <template>
   <span class="inline-block text-xs font-medium px-2 py-0.5 rounded-full" :class="color">
-    {{ STATUS_LABELS[status] ?? status }}
+    {{ $t(`statuses.${status}`, status) }}
   </span>
 </template>
 
 <script setup>
 import { computed } from 'vue'
-import { STATUS_LABELS } from '../data/provinces.js'
 
 const props = defineProps({
   status: { type: String, required: true },

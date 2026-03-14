@@ -1,9 +1,9 @@
 <template>
   <div class="max-w-sm mx-auto mt-16">
-    <h1 class="text-xl font-semibold mb-6">Inloggen</h1>
+    <h1 class="text-xl font-semibold mb-6">{{ $t('login.title') }}</h1>
     <form @submit.prevent="handleLogin" class="space-y-4">
       <div>
-        <label class="block text-sm font-medium mb-1">E-mailadres</label>
+        <label class="block text-sm font-medium mb-1">{{ $t('login.email') }}</label>
         <input
           v-model="email"
           type="email"
@@ -12,7 +12,7 @@
         />
       </div>
       <div>
-        <label class="block text-sm font-medium mb-1">Wachtwoord</label>
+        <label class="block text-sm font-medium mb-1">{{ $t('login.password') }}</label>
         <input
           v-model="password"
           type="password"
@@ -26,7 +26,7 @@
         :disabled="busy"
         class="w-full bg-orange-500 hover:bg-orange-600 text-white font-medium py-2 rounded-lg text-sm transition-colors disabled:opacity-50"
       >
-        {{ busy ? 'Inloggen…' : 'Inloggen' }}
+        {{ busy ? $t('login.submitting') : $t('login.submit') }}
       </button>
     </form>
   </div>
@@ -34,9 +34,11 @@
 
 <script setup>
 import { ref } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '../stores/auth.js'
 
+const { t } = useI18n()
 const email = ref('')
 const password = ref('')
 const error = ref('')
@@ -51,7 +53,7 @@ async function handleLogin() {
     await auth.login(email.value, password.value)
     router.push('/admin')
   } catch (e) {
-    error.value = 'Inloggen mislukt. Controleer je e-mailadres en wachtwoord.'
+    error.value = t('login.error')
   } finally {
     busy.value = false
   }

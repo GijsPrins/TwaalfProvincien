@@ -1,9 +1,9 @@
 <template>
   <div>
-    <h1 class="text-2xl font-semibold mb-1">12 Provincies Tracker</h1>
-    <p class="text-gray-500 text-sm mb-6">Voortgang per medailletrack</p>
+    <h1 class="text-2xl font-semibold mb-1">{{ $t('dashboard.title') }}</h1>
+    <p class="text-gray-500 text-sm mb-6">{{ $t('dashboard.subtitle') }}</p>
 
-    <div v-if="loading" class="text-sm text-gray-400">Laden…</div>
+    <div v-if="loading" class="text-sm text-gray-400">{{ $t('common.loading') }}</div>
     <div v-else-if="error" class="text-sm text-red-500">{{ error }}</div>
 
     <template v-else>
@@ -26,10 +26,10 @@
         <!-- Left: map — self-start prevents it from stretching to match sidebar height -->
         <div class="lg:w-[45%] lg:self-start bg-white rounded-xl border border-gray-200 p-5 flex flex-col">
           <div class="flex items-center justify-between mb-4">
-            <h2 class="font-medium text-sm">{{ selectedProvince?.name ?? 'Provincies' }}</h2>
+            <h2 class="font-medium text-sm">{{ selectedProvince?.name ?? $t('dashboard.provinces') }}</h2>
             <div class="flex gap-1.5">
               <button
-                v-for="d in [{ value: 'all', label: 'Alle' }, ...DISTANCES]"
+                v-for="d in distanceFilters"
                 :key="d.value"
                 @click="activeDistance = d.value"
                 class="px-2.5 py-1 rounded-full text-xs font-medium transition-colors"
@@ -49,7 +49,7 @@
               v-model:selected-province-id="selectedProvinceId"
             />
           </div>
-          <p v-if="selectedProvince" class="text-xs text-gray-400 text-center mt-2">Klik opnieuw om selectie op te heffen</p>
+          <p v-if="selectedProvince" class="text-xs text-gray-400 text-center mt-2">{{ $t('dashboard.click_to_deselect') }}</p>
         </div>
 
         <!-- Right: sidebar -->
@@ -70,7 +70,7 @@
           <!-- Upcoming events -->
           <div class="bg-white rounded-xl border border-gray-200 p-5">
             <h2 class="font-medium text-sm mb-3">
-              {{ selectedProvince ? `Aankomend in ${selectedProvince.name}` : 'Aankomend' }}
+              {{ selectedProvince ? $t('dashboard.upcoming_in', { province: selectedProvince.name }) : $t('dashboard.upcoming') }}
             </h2>
             <div v-if="upcoming.length" class="space-y-2">
               <router-link
@@ -92,8 +92,8 @@
               </router-link>
             </div>
             <p v-else class="text-sm text-gray-400">
-              {{ selectedProvince ? `Geen aankomende evenementen in ${selectedProvince.name}.` : 'Geen aankomende evenementen.' }}
-              <router-link v-if="auth.user && !selectedProvince" to="/admin/evenement/nieuw" class="text-orange-600 hover:underline">Toevoegen?</router-link>
+              {{ selectedProvince ? $t('dashboard.no_upcoming_in', { province: selectedProvince.name }) : $t('dashboard.no_upcoming') }}
+              <router-link v-if="auth.user && !selectedProvince" to="/admin/evenement/nieuw" class="text-orange-600 hover:underline">{{ $t('dashboard.add_question') }}</router-link>
             </p>
           </div>
 
@@ -105,6 +105,7 @@
 
 <script setup>
 import { ref, computed, onMounted } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { DISTANCES, PROVINCES } from '../data/provinces.js'
 import { useEvents } from '../composables/useEvents.js'
 import { useAuthStore } from '../stores/auth.js'
@@ -113,12 +114,18 @@ import ProgressCard from '../components/ProgressCard.vue'
 import NetherlandsMap from '../components/NetherlandsMap.vue'
 import StatusBadge from '../components/StatusBadge.vue'
 
+const { t } = useI18n()
 const activeDistance = ref('all')
 const selectedProvinceId = ref(null)
 const { events, loading, error, loadAllEvents } = useEvents()
 const auth = useAuthStore()
 
 onMounted(loadAllEvents)
+
+const distanceFilters = computed(() => [
+  { value: 'all', label: t('common.all') },
+  ...DISTANCES.map(d => ({ value: d.value, label: t(`distances.${d.value}.label`) })),
+])
 
 const selectedProvince = computed(() =>
   selectedProvinceId.value ? PROVINCES.find(p => p.id === selectedProvinceId.value) : null

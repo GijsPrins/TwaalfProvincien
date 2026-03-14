@@ -1,0 +1,132 @@
+{
+  "nav": {
+    "title": "12 Provincies",
+    "overview": "Overzicht",
+    "events": "Evenementen",
+    "admin": "Beheer",
+    "logout": "Uitloggen",
+    "login": "Inloggen"
+  },
+  "common": {
+    "loading": "Laden…",
+    "all": "Alle",
+    "optional": "optioneel"
+  },
+  "distances": {
+    "10k":      { "label": "10 km",           "medal": "Brons" },
+    "half":     { "label": "Halve marathon",   "medal": "Zilver" },
+    "marathon": { "label": "Marathon",          "medal": "Goud" }
+  },
+  "statuses": {
+    "interested": "Geïnteresseerd",
+    "signed_up":  "Ingeschreven",
+    "completed":  "Gelopen",
+    "dns":        "Niet gestart",
+    "dnf":        "Niet gefinisht"
+  },
+  "dashboard": {
+    "title": "12 Provincies Tracker",
+    "subtitle": "Voortgang per medailletrack",
+    "provinces": "Provincies",
+    "click_to_deselect": "Klik opnieuw om selectie op te heffen",
+    "upcoming_in": "Aankomend in {province}",
+    "upcoming": "Aankomend",
+    "no_upcoming_in": "Geen aankomende evenementen in {province}.",
+    "no_upcoming": "Geen aankomende evenementen.",
+    "add_question": "Toevoegen?"
+  },
+  "events": {
+    "title": "Evenementen",
+    "new": "+ Nieuw",
+    "subtitle": "Alle aankomende en gelopen evenementen",
+    "none_found": "Geen evenementen gevonden.",
+    "add_one": "Voeg er een toe."
+  },
+  "event_detail": {
+    "back": "← Terug naar evenementen",
+    "not_found_title": "Evenement niet gevonden",
+    "not_found_message": "Het evenement bestaat niet of is verwijderd.",
+    "edit": "Bewerken",
+    "date": "Datum",
+    "status": "Status",
+    "counts_for": "Telt mee voor",
+    "actual_distance": "Werkelijke afstand",
+    "finish_time": "Eindtijd",
+    "result": "Uitslag",
+    "view": "Bekijken →",
+    "registration_opens": "Inschrijving opent",
+    "registration_deadline": "Inschrijfdeadline",
+    "event_website": "Website evenement →",
+    "strava_activity": "Strava activiteit →",
+    "notes": "Notities"
+  },
+  "login": {
+    "title": "Inloggen",
+    "email": "E-mailadres",
+    "password": "Wachtwoord",
+    "submit": "Inloggen",
+    "submitting": "Inloggen…",
+    "error": "Inloggen mislukt. Controleer je e-mailadres en wachtwoord."
+  },
+  "admin": {
+    "overview": "Overzicht",
+    "new_event": "Nieuw evenement",
+    "strava": "Strava"
+  },
+  "admin_overview": {
+    "title": "Beheer",
+    "add_event_title": "Evenement toevoegen",
+    "add_event_desc": "Voeg een nieuw evenement toe aan je agenda",
+    "strava_title": "Strava koppeling",
+    "strava_desc": "Beheer je Strava verbinding en activiteiten"
+  },
+  "strava": {
+    "title": "Strava koppeling",
+    "description": "Koppel je Strava account om activiteiten automatisch te koppelen aan evenementen. Activiteiten worden voorgesteld als match — jij bepaalt of ze meegeteld worden.",
+    "not_configured": "Strava koppeling nog niet geconfigureerd. Voeg je Supabase Edge Function in en stel de Strava OAuth app in om verder te gaan."
+  },
+  "event_form": {
+    "title_new": "Evenement toevoegen",
+    "title_edit": "Evenement bewerken",
+    "name": "Naam evenement",
+    "date": "Datum",
+    "counts_for": "Telt mee voor",
+    "pick_track": "Kies medailletrack",
+    "location": "Locatie (startplaats)",
+    "location_placeholder": "bijv. Tilburg, Centrum",
+    "geocoding": "Locatie opzoeken…",
+    "geocoded": "Automatisch ingevuld",
+    "province": "Provincie",
+    "pick_province": "Kies provincie",
+    "status": "Status",
+    "event_website": "Website evenement",
+    "registration_opens": "Inschrijving opent",
+    "registration_deadline": "Inschrijfdeadline",
+    "actual_distance": "Werkelijke afstand",
+    "pick_distance": "Kies afstand",
+    "distance_other": "Anders…",
+    "distance_custom_placeholder": "Afstand in km, bijv. 16.09",
+    "finish_time": "Eindtijd (chip)",
+    "finish_time_placeholder": "bijv. 1:45:32",
+    "timing_url": "Link naar uitslag",
+    "notes": "Notities",
+    "save": "Opslaan",
+    "saving": "Opslaan…",
+    "cancel": "Annuleren",
+    "delete": "Verwijderen",
+    "confirm_delete": "Weet je zeker dat je dit evenement wilt verwijderen?",
+    "valid_from_error": "Evenementen voor de {track} track tellen pas mee vanaf {date}.",
+    "duplicate_error": "Je hebt al een gelopen {track} in deze provincie: \"{name}\". Elke provincie telt maar één keer mee.",
+    "optional": "optioneel"
+  },
+  "distance_presets": {
+    "10km":     "10 km",
+    "10mi":     "10 mijl (16,09 km)",
+    "half":     "Halve marathon (21,1 km)",
+    "30km":     "30 km",
+    "marathon": "Marathon (42,2 km)"
+  },
+  "progress": {
+    "no_medal": "Geen medaille"
+  }
+}
