@@ -82,7 +82,8 @@ export async function saveEvent(form, id = null) {
     const { error } = await supabase.from('events').update(row).eq('id', id)
     if (error) throw error
   } else {
-    const { error } = await supabase.from('events').insert(row)
+    const { data: { user } } = await supabase.auth.getUser()
+    const { error } = await supabase.from('events').insert({ ...row, user_id: user.id })
     if (error) throw error
   }
 }

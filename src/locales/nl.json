@@ -117,7 +117,8 @@
     "confirm_delete": "Weet je zeker dat je dit evenement wilt verwijderen?",
     "valid_from_error": "Evenementen voor de {track} track tellen pas mee vanaf {date}.",
     "duplicate_error": "Je hebt al een gelopen {track} in deze provincie: \"{name}\". Elke provincie telt maar één keer mee.",
-    "optional": "optioneel"
+    "optional": "optioneel",
+    "url_must_be_https": "Website- en uitslag-links moeten beginnen met https://"
   },
   "distance_presets": {
     "10km":     "10 km",

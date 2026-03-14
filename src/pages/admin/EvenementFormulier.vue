@@ -284,6 +284,15 @@ const VALID_FROM = { '10k': '2024-01-01', half: '2023-01-01', marathon: '2023-01
 async function save() {
   error.value = ''
 
+  // Validate URLs must use https
+  for (const field of ['event_url', 'timing_url']) {
+    const val = form.value[field]?.trim()
+    if (val && !val.startsWith('https://')) {
+      error.value = t('event_form.url_must_be_https')
+      return
+    }
+  }
+
   // Validate challenge start date
   const validFrom = VALID_FROM[form.value.distance_category]
   if (validFrom && form.value.date < validFrom) {

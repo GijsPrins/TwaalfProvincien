@@ -1,3 +1,16 @@
+<script setup>
+import { watch } from 'vue'
+import { useRouter } from 'vue-router'
+import { useAuthStore } from '../stores/auth.js'
+
+const auth = useAuthStore()
+const router = useRouter()
+
+watch(() => auth.user, (user) => {
+  if (!user) router.replace('/inloggen')
+}, { immediate: true })
+</script>
+
 <template>
   <div>
     <div class="flex items-center gap-4 mb-6 border-b border-gray-200 pb-4">
