@@ -7,6 +7,29 @@
     <div v-else-if="error" role="alert" class="text-sm text-red-500">{{ error }}</div>
 
     <template v-else>
+
+      <!-- Past-due events (logged-in only) -->
+      <div v-if="pastDueEvents.length" class="mb-6">
+        <h2 class="text-sm font-medium text-green-700 mb-2">{{ $t('completion.past_events_heading') }}</h2>
+        <div class="space-y-2">
+          <button
+            v-for="event in pastDueEvents"
+            :key="event.id"
+            type="button"
+            @click="selectedEvent = event"
+            class="w-full flex items-center justify-between p-4 border border-green-200 bg-green-50 rounded-xl hover:border-green-400 hover:bg-green-100 transition-colors text-left"
+          >
+            <div>
+              <div class="font-medium text-sm text-gray-900">{{ event.name }}</div>
+              <div class="text-xs text-gray-500 mt-0.5">
+                {{ event.provinces?.name }} · {{ $t(`distances.${event.distance_category}.label`) }} · {{ formatDateShort(event.date) }}
+              </div>
+            </div>
+            <span class="text-green-700 text-sm font-medium shrink-0 ml-3">{{ $t('completion.what_happened_short') }} →</span>
+          </button>
+        </div>
+      </div>
+
       <!-- Mobile: progress cards on top -->
       <div class="grid grid-cols-3 gap-3 mb-6 lg:hidden">
         <ProgressCard
@@ -100,6 +123,13 @@
 
         </div>
       </div>
+      <VoltooiingModal
+        v-if="selectedEvent"
+        :event="selectedEvent"
+        @close="selectedEvent = null"
+        @saved="onSaved"
+      />
+
     </template>
   </div>
 </template>
@@ -114,12 +144,27 @@ import { distanceLabel, formatDate, UPCOMING_STATUSES } from '../utils/events.js
 import ProgressCard from '../components/ProgressCard.vue'
 import NetherlandsMap from '../components/NetherlandsMap.vue'
 import StatusBadge from '../components/StatusBadge.vue'
+import VoltooiingModal from '../components/VoltooiingModal.vue'
 
 const { t } = useI18n()
 const activeDistance = ref('all')
 const selectedProvinceId = ref(null)
 const { events, loading, error, loadAllEvents } = useEvents()
 const auth = useAuthStore()
+
+const today = new Date().toISOString().slice(0, 10)
+const selectedEvent = ref(null)
+
+const pastDueEvents = computed(() =>
+  auth.user
+    ? events.value.filter(e => e.date <= today && ['interested', 'signed_up'].includes(e.status))
+    : []
+)
+
+async function onSaved() {
+  selectedEvent.value = null
+  await loadAllEvents()
+}
 
 onMounted(loadAllEvents)
 

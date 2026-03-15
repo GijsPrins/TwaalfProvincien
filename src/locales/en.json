@@ -133,5 +133,19 @@
   },
   "progress": {
     "no_medal": "No medal"
+  },
+  "completion": {
+    "past_events_heading": "Did you run this?",
+    "what_happened_short": "Add result",
+    "past_event_label": "Did you run?",
+    "what_happened": "How did it go?",
+    "outcome_completed": "Finished",
+    "outcome_dns": "DNS",
+    "outcome_dnf": "DNF",
+    "confirm": "Confirm",
+    "confirming": "Saving…",
+    "cancel": "Cancel",
+    "congrats_title": "Congratulations!",
+    "medal_earned": "You've earned the {medal} medal for {province}!"
   }
 }

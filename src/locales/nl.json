@@ -133,5 +133,19 @@
   },
   "progress": {
     "no_medal": "Geen medaille"
+  },
+  "completion": {
+    "past_events_heading": "Heb je dit gelopen?",
+    "what_happened_short": "Resultaat invullen",
+    "past_event_label": "Gelopen?",
+    "what_happened": "Hoe is het gegaan?",
+    "outcome_completed": "Gefinisht",
+    "outcome_dns": "DNS",
+    "outcome_dnf": "DNF",
+    "confirm": "Bevestigen",
+    "confirming": "Opslaan…",
+    "cancel": "Annuleren",
+    "congrats_title": "Gefeliciteerd!",
+    "medal_earned": "Je hebt de {medal}-medaille verdiend voor {province}!"
   }
 }
