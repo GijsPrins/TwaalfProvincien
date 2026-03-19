@@ -44,7 +44,9 @@
     "subtitle": "Alle aankomende en gelopen evenementen",
     "none_found": "Geen evenementen gevonden.",
     "add_one": "Voeg er een toe.",
-    "filter_by_status": "Filteren op status"
+    "filter_by_status": "Filteren op status",
+    "join": "Aanmelden",
+    "leave": "Deelname intrekken"
   },
   "event_detail": {
     "back": "← Terug naar evenementen",
@@ -62,7 +64,10 @@
     "registration_deadline": "Inschrijfdeadline",
     "event_website": "Website evenement →",
     "strava_activity": "Strava activiteit →",
-    "notes": "Notities"
+    "notes": "Notities",
+    "my_participation": "Mijn deelname",
+    "join_event": "Aanmelden voor dit evenement",
+    "edit_participation": "Deelname bewerken →"
   },
   "login": {
     "title": "Inloggen",
@@ -122,7 +127,13 @@
     "valid_from_error": "Evenementen voor de {track} track tellen pas mee vanaf {date}.",
     "duplicate_error": "Je hebt al een gelopen {track} in deze provincie: \"{name}\". Elke provincie telt maar één keer mee.",
     "optional": "optioneel",
-    "url_must_be_https": "Website- en uitslag-links moeten beginnen met https://"
+    "url_must_be_https": "Website- en uitslag-links moeten beginnen met https://",
+    "section_event_info": "Evenementgegevens",
+    "section_participation": "Mijn deelname",
+    "read_only_hint": "Je bent niet de aanmaker — catalogusvelden zijn alleen-lezen.",
+    "delete_participation": "Deelname verwijderen",
+    "confirm_leave": "Weet je zeker dat je je deelname wilt verwijderen?",
+    "create_status_hint": "Je wordt aangemeld als 'Geïnteresseerd'. Je kunt dit daarna aanpassen."
   },
   "distance_presets": {
     "10km":     "10 km",

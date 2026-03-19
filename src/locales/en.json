@@ -44,7 +44,9 @@
     "subtitle": "All upcoming and completed events",
     "none_found": "No events found.",
     "add_one": "Add one.",
-    "filter_by_status": "Filter by status"
+    "filter_by_status": "Filter by status",
+    "join": "Register",
+    "leave": "Cancel registration"
   },
   "event_detail": {
     "back": "← Back to events",
@@ -62,7 +64,10 @@
     "registration_deadline": "Registration deadline",
     "event_website": "Event website →",
     "strava_activity": "Strava activity →",
-    "notes": "Notes"
+    "notes": "Notes",
+    "my_participation": "My participation",
+    "join_event": "Register for this event",
+    "edit_participation": "Edit participation →"
   },
   "login": {
     "title": "Log in",
@@ -122,7 +127,13 @@
     "valid_from_error": "Events for the {track} track only count from {date}.",
     "duplicate_error": "You already have a completed {track} in this province: \"{name}\". Each province only counts once.",
     "optional": "optional",
-    "url_must_be_https": "Website and results links must start with https://"
+    "url_must_be_https": "Website and results links must start with https://",
+    "section_event_info": "Event details",
+    "section_participation": "My participation",
+    "read_only_hint": "You are not the creator — catalog fields are read-only.",
+    "delete_participation": "Remove participation",
+    "confirm_leave": "Are you sure you want to remove your participation?",
+    "create_status_hint": "You will be registered as 'Interested'. You can change this afterwards."
   },
   "distance_presets": {
     "10km":     "10 km",

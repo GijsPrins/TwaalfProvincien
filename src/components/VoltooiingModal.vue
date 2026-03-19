@@ -109,7 +109,7 @@
 import { ref, computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 import ConfettiCanvas from './ConfettiCanvas.vue'
-import { saveEvent } from '../composables/useEvents.js'
+import { saveParticipation } from '../composables/useEvents.js'
 
 const { t } = useI18n()
 
@@ -148,8 +148,7 @@ async function confirm() {
 
   busy.value = true
   try {
-    await saveEvent({
-      ...props.event,
+    await saveParticipation({
       status:             outcome.value,
       finish_time:        finishTime.value || null,
       timing_url:         timingUrl.value || null,
