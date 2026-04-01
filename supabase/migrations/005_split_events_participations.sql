@@ -1,6 +1,26 @@
 -- 005_split_events_participations.sql
 -- Split events into a shared catalog + per-user participation records.
 -- Prerequisite for multi-user support.
+--
+-- SAFETY STRATEGY:
+--   Step 0 creates a full backup of events before any changes.
+--   A row-count check after the data migration aborts the transaction
+--   if anything looks wrong. The backup table persists after the migration
+--   completes so data can be manually recovered if issues surface later.
+--
+-- TO RECOVER FROM BACKUP (if needed):
+--   Run manually in SQL editor:
+--     insert into event_participations (event_id, user_id, status, finish_time,
+--       timing_url, actual_distance_km, strava_activity_id, notes, created_at, updated_at)
+--     select id, user_id, status, finish_time, timing_url, actual_distance_km,
+--            strava_activity_id, notes, created_at, updated_at
+--     from events_backup_005
+--     where user_id is not null;
+
+-- ============================================================
+-- 0. Backup events in full before touching anything
+-- ============================================================
+create table if not exists events_backup_005 as select * from events;
 
 -- ============================================================
 -- 1. Create profiles table (minimal — expanded in multi-user story)
@@ -12,6 +32,10 @@ create table if not exists profiles (
 );
 
 alter table profiles enable row level security;
+
+drop policy if exists "Profiles are public"  on profiles;
+drop policy if exists "Profiles insert own"  on profiles;
+drop policy if exists "Profiles update own"  on profiles;
 
 create policy "Profiles are public"
   on profiles for select using (true);
@@ -66,6 +90,11 @@ create table if not exists event_participations (
 
 alter table event_participations enable row level security;
 
+drop policy if exists "Participations are public"   on event_participations;
+drop policy if exists "Participations insert own"   on event_participations;
+drop policy if exists "Participations update own"   on event_participations;
+drop policy if exists "Participations delete own"   on event_participations;
+
 create policy "Participations are public"
   on event_participations for select using (true);
 
@@ -91,13 +120,14 @@ begin
 end;
 $$;
 
+drop trigger if exists event_participations_updated_at on event_participations;
 create trigger event_participations_updated_at
   before update on event_participations
   for each row execute function update_updated_at_column();
 
 -- ============================================================
 -- 4. Migrate existing event data → event_participations
---    All existing rows belong to the single owner (backfilled in 004)
+--    Only rows with a non-null user_id are migrated.
 -- ============================================================
 insert into event_participations (
   event_id, user_id, status, finish_time, timing_url,
@@ -115,12 +145,39 @@ select
   notes,
   created_at,
   updated_at
-from events;
+from events
+where user_id is not null
+on conflict (event_id, user_id) do nothing;
+
+-- ============================================================
+-- 4b. Verify row counts match before proceeding with destructive steps
+-- ============================================================
+do $$
+declare
+  source_count int;
+  dest_count   int;
+begin
+  select count(*) into source_count from events_backup_005 where user_id is not null;
+  select count(*) into dest_count   from event_participations;
+  if source_count <> dest_count then
+    raise exception
+      'Data migration aborted: expected % participation rows, got %. No changes were committed.',
+      source_count, dest_count;
+  end if;
+end $$;
 
 -- ============================================================
 -- 5. Rename user_id → created_by on events
 -- ============================================================
-alter table events rename column user_id to created_by;
+do $$
+begin
+  if exists (
+    select 1 from information_schema.columns
+    where table_name = 'events' and column_name = 'user_id'
+  ) then
+    alter table events rename column user_id to created_by;
+  end if;
+end $$;
 
 -- ============================================================
 -- 6. Drop participation-specific columns from events
