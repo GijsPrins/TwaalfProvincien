@@ -70,6 +70,16 @@ function baseQueryWithParticipation(userId) {
     .order('date', { ascending: true })
 }
 
+// ── Query with left-join for all participations (no user filter) ──────────────
+// Safe for public/single-user use because participations are publicly readable
+// and there is only one user in this app.
+function baseQueryWithAllParticipations() {
+  return supabase
+    .from('events')
+    .select(`${CATALOG_SELECT}, ${PARTICIPATION_SELECT}`)
+    .order('date', { ascending: true })
+}
+
 // ── Query with inner-join: only events where this user has a participation ────
 function baseQueryMyEvents(userId) {
   return supabase
@@ -79,8 +89,10 @@ function baseQueryMyEvents(userId) {
     .order('date', { ascending: true })
 }
 
-// ── useEvents — all catalog events, optionally with user's participation ───────
-// Pass userId to get participation overlay; omit for public/unauthenticated use.
+// ── useEvents — all catalog events, always with participation data ─────────────
+// Pass userId to filter participations to that user (multi-user safe).
+// Omit userId for public/single-user use — returns all participations (safe
+// because this is a single-user app and participations are publicly readable).
 export function useEvents(userId = null) {
   const events = ref([])
   const loading = ref(false)
@@ -89,11 +101,11 @@ export function useEvents(userId = null) {
   async function loadAllEvents() {
     loading.value = true
     error.value = null
-    const query = userId ? baseQueryWithParticipation(userId) : baseQuery()
+    const query = userId ? baseQueryWithParticipation(userId) : baseQueryWithAllParticipations()
     const { data, error: err } = await query
     loading.value = false
     if (err) { error.value = err.message; return }
-    events.value = userId ? data.map(flattenParticipation) : data
+    events.value = data.map(flattenParticipation)
   }
 
   return { events, loading, error, loadAllEvents }

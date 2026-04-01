@@ -138,7 +138,7 @@
 import { ref, computed, onMounted } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { DISTANCES, PROVINCES } from '../data/provinces.js'
-import { useMyEvents } from '../composables/useEvents.js'
+import { useEvents } from '../composables/useEvents.js'
 import { useAuthStore } from '../stores/auth.js'
 import { distanceLabel, formatDate, UPCOMING_STATUSES } from '../utils/events.js'
 import ProgressCard from '../components/ProgressCard.vue'
@@ -150,7 +150,7 @@ const { t } = useI18n()
 const activeDistance = ref('all')
 const selectedProvinceId = ref(null)
 const auth = useAuthStore()
-const { events, loading, error, loadAllEvents } = useMyEvents(auth.user?.id)
+const { events, loading, error, loadAllEvents } = useEvents(auth.user?.id)
 
 const today = new Date().toISOString().slice(0, 10)
 const selectedEvent = ref(null)
